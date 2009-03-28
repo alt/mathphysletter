@@ -11,21 +11,21 @@
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{mathphysletter}[]
+
 \RequirePackage{xkeyval}
 
-\LoadClass[]{scrlttr2}
-\usepackage[ngerman]{babel}
+\LoadClass[ngerman]{scrlttr2}
 
 \RequirePackage{
-xltxtra,
-graphicx,
-scrpage2,
-marginnote,
-xcolor
+  babel,
+  graphicx,
+  marginnote,
+  scrpage2,
+  xcolor,
+  xltxtra
 }
 
-\usepackage[top=4cm,headheight=2.5cm]{geometry}
-
+\RequirePackage[top=4cm,headheight=2.5cm]{geometry}
 \newcommand\mathphysaddr{\small
 Fachschaft MathPhys\\
 Im Neuenheimer Feld\\
@@ -45,16 +45,13 @@ Ansprechperson \\
 E-Mail\\
 \EMail
 }
-
 \ohead{\includegraphics[width=5.5cm]{unilogo}\hspace*{4mm}}
 \setheadwidth[0pt]{text}
 \setfootwidth{head}
 
 \date{}
-
 \setkomavar{backaddress}{Universität Heidelberg Fachschaftskonferenz Albert-Ueberle-Straße 3-5 69120
 Heidelberg}
-
 \let\oldpar\par
 \def\par{\parshape 1 0cm 12cm \oldpar}
 
@@ -63,7 +60,6 @@ Heidelberg}
   \let\par\oldpar\clearpage
   \ofoot{\color[rgb]{0.63137 0.090196 0.18431}\linethickness{.4mm}\line(0,-1){2}\line(0,1){10}\, \normalcolor\thepage}
 }
-
 \pagestyle{scrheadings}
 \cfoot{}
 
