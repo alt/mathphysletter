@@ -50,7 +50,7 @@ xltxtra
 % Why this complicated method? \TeX\ itself cannot change the textwidth in a paragraph because of its (otherwise superb) paragraph-building algorithm. So this dirty workaround is needed. Maybe in future versions the last paragraph will be implemented in a special way so this could be omitted.
 
 % \section{Implementation}
-% \subsection{Page Layout}
+% \subsection{Preamble Settings}
 % |xkeyval| is needed to define some keys for the layout. Not yet used, but necessary in the future.\\
 % |scrlttr2| is used to produce the letters. Loading of packages and passing of options:
 %    \begin{macrocode}
@@ -69,6 +69,7 @@ xltxtra
 
 \RequirePackage[top=4cm,headheight=2.5cm]{geometry}
 %    \end{macrocode}
+% \subsection{The Right Column}
 % The right column is set using the following text:
 %    \begin{macrocode}
 \newcommand\mathphysaddr{\small
@@ -91,6 +92,7 @@ E-Mail\\
 \EMail
 }
 %    \end{macrocode}
+% \subsection{Page Layout}
 % We put the university-logo on the upper right. The date is set seperately in the right column, so we don’t need it in the class itself.
 %    \begin{macrocode}
 \ohead{\includegraphics[width=5.5cm]{unilogo}\hspace*{4mm}}
@@ -101,8 +103,8 @@ E-Mail\\
 %    \end{macrocode}
 % The backaddress might change. Nevertheless, this will be the default value:
 %    \begin{macrocode}
-\setkomavar{backaddress}{Universität Heidelberg Fachschaftskonferenz Albert-Ueberle-Straße 3-5 69120
-Heidelberg}
+\setkomavar{backaddress}{Universität Heidelberg Fachschaftskonferenz
+                         Albert-Überle-Straße 3-5 69120 Heidelberg}
 %    \end{macrocode}
 % Now, this is the dirty way to enable the smaller textwidth on the first page. This is not nice \TeX-code at all, feel free to mail me an improved version or any suggestions!
 % \\ \\
@@ -114,14 +116,19 @@ Heidelberg}
 \def\endoffirstpage{
   \par
   \let\par\oldpar\clearpage
-  \ofoot{\color[rgb]{0.63137 0.090196 0.18431}\linethickness{.4mm}\line(0,-1){2}\line(0,1){10}\, \normalcolor\thepage}
+  \ofoot{
+    \color[rgb]{0.63137 0.090196 0.18431}
+    \linethickness{.4mm}
+    \line(0,-1){2}\line(0,1){10}\,
+    \normalcolor\thepage
+  }
 }
 \pagestyle{scrheadings}
 \cfoot{}
 %    \end{macrocode}
-% The following macros are for user interaction. See section User Interface.
+% \subsection{Macros for User Interaction}
+% The following macros are defined for user interaction. See section User Interface.
 %    \begin{macrocode}
-
 \newcommand\Empfänger[1]{\def\Empf{#1}}
 \newcommand\Anrede[1]{\def\Anre{#1}}
 
@@ -130,19 +137,33 @@ Heidelberg}
 
 \newcommand\ZweiteSeite{\endoffirstpage}
 %    \end{macrocode}
-
+% And that’s it for the preamble.
+% 
+% As the letter should be typeset automatically, the |\begin{letter}{}| and |\opening{}| are set automatically. The command |\thispagestyle{scrheadings}| is needed because |scrlttr2| defines another pagestyle for the first page. |\ofoot{}| suppresses the pagenumber for the first page.
+% 
+% With |\marginnote|, the right column is set. This code is a great mess, don’t copy it into another document, it will very shure break something.
 %    \begin{macrocode}
 \AtBeginDocument{
-\begin{letter}{\Empf}
-\opening{\Anre}
-\thispagestyle{scrheadings}
-\marginnote{\put(-80,0){\begin{minipage}[b]{5cm}\vspace*{-7cm}\mathphysaddr\end{minipage}}}
-\ofoot{}
+  \begin{letter}{\Empf}
+  \opening{\Anre}
+  \thispagestyle{scrheadings}
+  \ofoot{}
+  \marginnote{
+    \put(-80,0){
+      \begin{minipage}[b]{5cm}
+        \vspace*{-7cm}
+        \mathphysaddr
+      \end{minipage}
+    }
+  }
 }
-
+%    \end{macrocode}
+% At the end of the document, the letter is closed.
+%    \begin{macrocode}
 \AtEndDocument{
 \end{letter}
 }
 %    \end{macrocode}
+% And that’s it finally. Happy \TeX{}ing!
 % \Finale
 \endinput
