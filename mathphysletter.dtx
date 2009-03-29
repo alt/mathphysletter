@@ -16,6 +16,7 @@
 \usepackage{
 babel,
 lmodern,
+xcolor,
 xltxtra
 }
 
@@ -32,23 +33,27 @@ xltxtra
 % \frenchspacing
 % \maketitle
 % \begin{abstract}
-% With the |mathletter| class, members of the mathphys-FS of Heidelberg can write letters in the corporate design of the university. The handling tries to be very easy and intuitive.
+% With the |mathphysletter| class, members of the mathphys-FS of Heidelberg can write letters in the corporate design of the university. The handling tries to be very easy and intuitive.
 % \end{abstract}
 % \section{Important Notices:}
 % To use this class, please read section User Interface carefully. This class must be compiled with \XeLaTeX. If you don’t know about \XeLaTeX\ and how to use it, feel free to contact the author. You need to have the file |unilogo.jpg| in the folder you’re operating in! Maybe the path will change, but you need the picture to successfully compile your document. In future versions, the font Goudy Old Style might be used. Then you have to have this font available.
 % \section{User Interface}
-% At the moment, there are 5 commands for the user. Use them as\\
-% |\Empfänger{An \\ den Senat}| ect.
+% At the moment, there are 9 commands for the user. The red commands have to be used in the preamble; the black ones must \emph{not} be used in the preamble! See section \ref{example} for an example.\def\red{\color{red}}
 % \begin{itemize}
-% \item[|Empfänger|] This is the ”to“-field an a letter. Use |\\| to separate the lines.
-% \item[|Anrede|] This is used for the opening. E.\,g. say |\Anrede{Sehr geehrte Damen und Herren,}|
-% \item[|Ansprechperson|] The contact person in the right column under the entry ”Ansprechperson“.
-% \item[|Email|] The e-mail address of this person.
+% \item[\red|Empfänger|] This is the ”to“-field an a letter. Use |\\| to separate the lines.
+% \item[\red|Anrede|] This is used for the opening. E.\,g. say |\Anrede{Sehr geehrte Damen und Herren,}|
+% \item[\red|Ansprechperson|] The contact person in the right column under the entry ”Ansprechperson“.
+% \item[\red|Email|] The e-mail address of this person.
+% \item[|Gruß|] Sets a greeting under the letter. Please use it at the place in the document where it belongs. Do not set this one or the following commands into the preamble!
+% \item[|PS|] For a post scriptum.
+% \item[|Anlagen|] Enclosings.
+% \item[|Kopie|] cc to other persons.
 % \end{itemize}
-% Please notize these are case-sensitive! The last user command is |\ZweiteSeite|. This command is very important if you write a letter with more than one page. At the end of the first page, you \emph{must} use this command to end the last paragraph on that page. A new page will begin and now you can type just as you like.
+% Please notize that these commands are case-sensitive!
+%
+% The last, but very important, user command is {\red|\ZweiteSeite|}. This command is necessary if you write a letter with more than one page. At the end of the first page, you \emph{must} use this command to end the last paragraph on that page. A new page will begin and now you can type just as you like. See section \ref{example} for the usage.
 % 
 % Why this complicated method? \TeX\ itself cannot change the textwidth in a paragraph because of its (otherwise superb) paragraph-building algorithm. So this dirty workaround is needed. Maybe in future versions the last paragraph will be implemented in a special way so this could be omitted.
-
 % \section{Implementation}
 % \subsection{Preamble Settings}
 % |xkeyval| is needed to define some keys for the layout. Not yet used, but necessary in the future.\\
@@ -136,6 +141,12 @@ E-Mail\\
 \newcommand\Email[1]{\def\EMail{#1}}
 
 \newcommand\ZweiteSeite{\endoffirstpage}
+
+\newcommand\Gruß[1]{\closing{#1}}
+\newcommand\PS[1]{\ps{#1}}
+\newcommand\Anlage[1]{\setkomavar*{enclseparator}{Anlage}\encl{#1}}
+\newcommand\Anlagen[1]{\setkomavar*{enclseparator}{Anlagen}\encl{#1}}
+\newcommand\Kopie[1]{\cc{#1}}
 %    \end{macrocode}
 % And that’s it for the preamble.
 % 
@@ -164,6 +175,26 @@ E-Mail\\
 \end{letter}
 }
 %    \end{macrocode}
-% And that’s it finally. Happy \TeX{}ing!
+% And that’s it. Happy \TeX{}ing!
+% \section{Example Document}
+% \label{example}
+% This is a short document showing the usage of the |mathphysletter| class.
+% \begin{verbatim}
+% \documentclass{mathphysletter}
+% \usepackage{mypackage} % load whatever special package you need
+% \Empfänger{An \\ Die kleine Hexe \\ Blocksberg 7 \\ 666 Blocksberghausen}
+% \Ansprechperson{Die große Hexe}
+% \Email{grosse.hexe@blocksmail.org}
+% \Anrede{Liebe kleine Hexe!}
+% \begin{document}
+% Können wir dich dieses Jahr wieder besuchen? Ich freue mich schon sehr auf
+% die tolle Feier. Fritz will dir auch noch schreiben, aber auf der nächsten
+% Seite. \ZweiteSeite
+% Hallo Hexe!\\
+% Ich bin’s, der Fritz. Freue mich, dich wieder zu sehen!
+% 
+% \Gruß{Lieben Gruß\\ Fritz}
+% \end{document}
+% \end{verbatim}
 % \Finale
 \endinput

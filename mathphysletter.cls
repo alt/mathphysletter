@@ -11,7 +11,6 @@
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{mathphysletter}[]
-
 \RequirePackage{xkeyval}
 
 \LoadClass[ngerman]{scrlttr2}
@@ -50,19 +49,23 @@ E-Mail\\
 \setfootwidth{head}
 
 \date{}
-\setkomavar{backaddress}{Universität Heidelberg Fachschaftskonferenz Albert-Ueberle-Straße 3-5 69120
-Heidelberg}
+\setkomavar{backaddress}{Universität Heidelberg Fachschaftskonferenz
+                         Albert-Überle-Straße 3-5 69120 Heidelberg}
 \let\oldpar\par
 \def\par{\parshape 1 0cm 12cm \oldpar}
 
 \def\endoffirstpage{
   \par
   \let\par\oldpar\clearpage
-  \ofoot{\color[rgb]{0.63137 0.090196 0.18431}\linethickness{.4mm}\line(0,-1){2}\line(0,1){10}\, \normalcolor\thepage}
+  \ofoot{
+    \color[rgb]{0.63137 0.090196 0.18431}
+    \linethickness{.4mm}
+    \line(0,-1){2}\line(0,1){10}\,
+    \normalcolor\thepage
+  }
 }
 \pagestyle{scrheadings}
 \cfoot{}
-
 \newcommand\Empfänger[1]{\def\Empf{#1}}
 \newcommand\Anrede[1]{\def\Anre{#1}}
 
@@ -71,14 +74,25 @@ Heidelberg}
 
 \newcommand\ZweiteSeite{\endoffirstpage}
 
+\newcommand\Gruß[1]{\closing{#1}}
+\newcommand\PS[1]{\ps{#1}}
+\newcommand\Anlage[1]{\setkomavar*{enclseparator}{Anlage}\encl{#1}}
+\newcommand\Anlagen[1]{\setkomavar*{enclseparator}{Anlagen}\encl{#1}}
+\newcommand\Kopie[1]{\cc{#1}}
 \AtBeginDocument{
-\begin{letter}{\Empf}
-\opening{\Anre}
-\thispagestyle{scrheadings}
-\marginnote{\put(-80,0){\begin{minipage}[b]{5cm}\vspace*{-7cm}\mathphysaddr\end{minipage}}}
-\ofoot{}
+  \begin{letter}{\Empf}
+  \opening{\Anre}
+  \thispagestyle{scrheadings}
+  \ofoot{}
+  \marginnote{
+    \put(-80,0){
+      \begin{minipage}[b]{5cm}
+        \vspace*{-7cm}
+        \mathphysaddr
+      \end{minipage}
+    }
+  }
 }
-
 \AtEndDocument{
 \end{letter}
 }
