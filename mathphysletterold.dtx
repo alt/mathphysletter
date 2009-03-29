@@ -1,0 +1,200 @@
+% \iffalse
+% This is mathphysletterold.dtx, a class for writing letters by the mathphys-FS HD.
+% 
+% This code is public domain.
+% 
+%% Author: Arno L. Trautmann, mail: arno dot trautmann at gmx dot de
+%%
+%
+%<+class|driver>
+%<+class>\NeedsTeXFormat{LaTeX2e}
+%<+class>\ProvidesPackage{mathphysletterold}[]
+%
+%<*driver>
+\documentclass[english]{ltxdoc}
+%\documentclass{gmdocc}
+\usepackage{
+babel,
+lmodern,
+xcolor,
+xltxtra
+}
+
+\title{The \textsf{mathphysletterold} class}
+\author{Arno L. Trautmann\thanks{arno.trautmann@gmx.de}}
+\date{\today}
+
+\begin{document}
+\DocInput{mathphysletterold.dtx}
+\end{document}
+%</driver>
+% 
+% \fi
+% \frenchspacing
+% \maketitle
+% \begin{abstract}
+% With the |mathphysletterold| class, members of the mathphys-FS of Heidelberg can write letters in the corporate design of the university. The handling tries to be very easy and intuitive.
+% \end{abstract}
+% \section{Important Notices:}
+% To use this class, please read section User Interface carefully. This class must be compiled with \XeLaTeX. If you don’t know about \XeLaTeX\ and how to use it, feel free to contact the author. You need to have the file |unilogo.jpg| in the folder you’re operating in! Maybe the path will change, but you need the picture to successfully compile your document. In future versions, the font Goudy Old Style might be used. Then you have to have this font available.
+% \section{User Interface}
+% At the moment, there are 9 commands for the user. The red commands have to be used in the preamble; the black ones must \emph{not} be used in the preamble! See section \ref{example} for an example.\def\red{\color{red}}
+% \begin{itemize}
+% \item[\red|Empfänger|] This is the ”to“-field an a letter. Use |\\| to separate the lines.
+% \item[\red|Anrede|] This is used for the opening. E.\,g. say |\Anrede{Sehr geehrte Damen und Herren,}|
+% \item[\red|Ansprechperson|] The contact person in the right column under the entry ”Ansprechperson“.
+% \item[\red|Email|] The e-mail address of this person.
+% \item[|Gruß|] Sets a greeting under the letter. Please use it at the place in the document where it belongs. Do not set this one or the following commands into the preamble!
+% \item[|PS|] For a post scriptum.
+% \item[|Anlagen|] Enclosings.
+% \item[|Kopie|] cc to other persons.
+% \end{itemize}
+% Please notize that these commands are case-sensitive!
+%
+% The last, but very important, user command is {\red|\ZweiteSeite|}. This command is necessary if you write a letter with more than one page. At the end of the first page, you \emph{must} use this command to end the last paragraph on that page. A new page will begin and now you can type just as you like. See section \ref{example} for the usage.
+% 
+% Why this complicated method? \TeX\ itself cannot change the textwidth in a paragraph because of its (otherwise superb) paragraph-building algorithm. So this dirty workaround is needed. Maybe in future versions the last paragraph will be implemented in a special way so this could be omitted.
+% \section{Implementation}
+% \subsection{Preamble Settings}
+% |xkeyval| is needed to define some keys for the layout. Not yet used, but necessary in the future.\\
+% |scrlttr2| is used to produce the letters. Loading of packages and passing of options:
+%    \begin{macrocode}
+\RequirePackage{xkeyval}
+
+\LoadClass[ngerman]{scrlttr2}
+
+\RequirePackage{
+  babel,
+  graphicx,
+  marginnote,
+  scrpage2,
+  xcolor,
+  xltxtra
+}
+
+\RequirePackage[top=4cm,headheight=2.5cm]{geometry}
+%    \end{macrocode}
+% \subsection{The Right Column}
+% The right column is set using the following text:
+%    \begin{macrocode}
+\newcommand\mathphysaddr{\small
+Fachschaft MathPhys\\
+Im Neuenheimer Feld\\
+305\\
+69120 Heidelberg\\ \\
+Tel.:\\
++49(0)\,62\,21/54\,24\,56\\
+Fax.:\\
++49(0)\,62\,21/54\,24\,57\\ \\
+E-Mail:\\
+fachschaft@mathphys.\\fsk.uni-heidelberg.de\vspace{5em}\\
+Datum\\
+\today
+\\ \\
+Ansprechperson \\
+\Ansprech \\ \\
+E-Mail\\
+\EMail
+}
+%    \end{macrocode}
+% \subsection{Page Layout}
+% We put the university-logo on the upper right. The date is set seperately in the right column, so we don’t need it in the class itself.
+%    \begin{macrocode}
+\ohead{\includegraphics[width=5.5cm]{unilogo}\hspace*{4mm}}
+\setheadwidth[0pt]{text}
+\setfootwidth{head}
+
+\date{}
+%    \end{macrocode}
+% The backaddress might change. Nevertheless, this will be the default value:
+%    \begin{macrocode}
+\setkomavar{backaddress}{Universität Heidelberg Fachschaftskonferenz
+                         Albert-Überle-Straße 3-5 69120 Heidelberg}
+%    \end{macrocode}
+% Now, this is the dirty way to enable the smaller textwidth on the first page. This is not nice \TeX-code at all, feel free to mail me an improved version or any suggestions!
+% \\ \\
+% We redefine |\par| to insert a |\parshape| at the end of every paragraph. That will shorten the lines to the amount we want it. At the end of the first page, this definition is revoked and everything will go on the normal way. The pagenumber will be insertet from the second page on.
+%    \begin{macrocode}
+\let\oldpar\par
+\def\par{\parshape 1 0cm 12cm \oldpar}
+
+\def\endoffirstpage{
+  \par
+  \let\par\oldpar\clearpage
+  \ofoot{
+    \color[rgb]{0.63137 0.090196 0.18431}
+    \linethickness{.4mm}
+    \line(0,-1){2}\line(0,1){10}\,
+    \normalcolor\thepage
+  }
+}
+\pagestyle{scrheadings}
+\cfoot{}
+%    \end{macrocode}
+% \subsection{Macros for User Interaction}
+% The following macros are defined for user interaction. See section User Interface.
+%    \begin{macrocode}
+\newcommand\Empfänger[1]{\def\Empf{#1}}
+\newcommand\Anrede[1]{\def\Anre{#1}}
+
+\newcommand\Ansprechperson[1]{\def\Ansprech{#1}}
+\newcommand\Email[1]{\def\EMail{#1}}
+
+\newcommand\ZweiteSeite{\endoffirstpage}
+
+\newcommand\Gruß[1]{\closing{#1}}
+\newcommand\PS[1]{\ps{#1}}
+\newcommand\Anlage[1]{\setkomavar*{enclseparator}{Anlage}\encl{#1}}
+\newcommand\Anlagen[1]{\setkomavar*{enclseparator}{Anlagen}\encl{#1}}
+\newcommand\Kopie[1]{\cc{#1}}
+%    \end{macrocode}
+% And that’s it for the preamble.
+% 
+% As the letter should be typeset automatically, the |\begin{letter}{}| and |\opening{}| are set automatically. The command |\thispagestyle{scrheadings}| is needed because |scrlttr2| defines another pagestyle for the first page. |\ofoot{}| suppresses the pagenumber for the first page.
+% 
+% With |\marginnote|, the right column is set. This code is a great mess, don’t copy it into another document, it will very shure break something.
+%    \begin{macrocode}
+\AtBeginDocument{
+  \begin{letter}{\Empf}
+  \opening{\Anre}
+  \thispagestyle{scrheadings}
+  \ofoot{}
+  \marginnote{
+    \put(-80,0){
+      \begin{minipage}[b]{5cm}
+        \vspace*{-7cm}
+        \mathphysaddr
+      \end{minipage}
+    }
+  }
+}
+%    \end{macrocode}
+% At the end of the document, the letter is closed.
+%    \begin{macrocode}
+\AtEndDocument{
+\end{letter}
+}
+%    \end{macrocode}
+% And that’s it. Happy \TeX{}ing!
+% \section{Example Document}
+% \label{example}
+% This is a short document showing the usage of the |mathphysletterold| class.
+% \begin{verbatim}
+% \documentclass{mathphysletterold}
+% \usepackage{mypackage} % load whatever special package you need
+% \Empfänger{An \\ Die kleine Hexe \\ Blocksberg 7 \\ 666 Blocksberghausen}
+% \Ansprechperson{Die große Hexe}
+% \Email{grosse.hexe@blocksmail.org}
+% \Anrede{Liebe kleine Hexe!}
+% \begin{document}
+% Können wir dich dieses Jahr wieder besuchen? Ich freue mich schon sehr auf
+% die tolle Feier. Fritz will dir auch noch schreiben, aber auf der nächsten
+% Seite. \ZweiteSeite
+% Hallo Hexe!\\
+% Ich bin’s, der Fritz. Freue mich, dich wieder zu sehen!
+% 
+% \Gruß{Lieben Gruß\\ Fritz}
+% \end{document}
+% \end{verbatim}
+% \Finale
+\endinput
