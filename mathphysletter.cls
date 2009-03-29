@@ -33,7 +33,7 @@
   top=85mm,
   headheight=30mm,
   headsep=50mm,
-  bottom=15mm,
+  bottom=45mm,
   right=68mm,
   marginparsep=19mm,
   marginpar=65mm,
@@ -63,13 +63,23 @@ Ansprechperson \\
 E-Mail\\
 \EMail
 }
+\date{}
+
+\pagestyle{scrheadings}
 \ihead{\hspace*{80mm}\includegraphics[width=65mm]{unilogo}}
 \setheadwidth[0pt]{text}
-\setfootwidth{head}
 
-\date{}
-\pagestyle{scrheadings}
-\ofoot{\thepage dtriunedtirne itrean }
+\setfootwidth{text}
+\cfoot{}
+\ifoot{\vspace*{-15mm}\\\hspace*{121mm}
+\mbox{\rm\fontsize{9pt}{13pt}
+\iftexfonts\else
+\fontspec{Goudy-Old-Style}
+\fi\linethickness{.3mm}
+\put(0,0){\color[rgb]{0.65098039,0,0}\line(0,-1){80}}
+\put(0,0){\color[rgb]{0.65098039,0,0}\line(0,1){9}}
+\hspace*{3mm}
+Seite \thepage}}
 \newcommand\Empfänger[1]{\def\Empf{#1}}
 \newcommand\Anrede[1]{\def\Anre{#1}}
 

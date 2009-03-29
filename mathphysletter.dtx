@@ -86,7 +86,7 @@ xltxtra
   top=85mm,
   headheight=30mm,
   headsep=50mm,
-  bottom=15mm,
+  bottom=45mm,
   right=68mm,
   marginparsep=19mm,
   marginpar=65mm,
@@ -124,19 +124,23 @@ E-Mail\\
 % \subsection{Page Layout}
 % We put the university-logo on the upper right. The date is set seperately in the right column, so we don’t need it in the class itself.
 %    \begin{macrocode}
+\date{}
+
+\pagestyle{scrheadings}
 \ihead{\hspace*{80mm}\includegraphics[width=65mm]{unilogo}}
 \setheadwidth[0pt]{text}
-\setfootwidth{head}
 
-\date{}
-%    \end{macrocode}
-% Now, this is the dirty way to enable the smaller textwidth on the first page. This is not nice \TeX-code at all, feel free to mail me an improved version or any suggestions!
-% \\ \\
-% We redefine |\par| to insert a |\parshape| at the end of every paragraph. That will shorten the lines to the amount we want it. At the end of the first page, this definition is revoked and everything will go on the normal way. The pagenumber will be insertet from the second page on.
-%    \begin{macrocode}
-\pagestyle{scrheadings}
-%\cfoot{}
-\ofoot{\thepage dtriunedtirne itrean }
+\setfootwidth{text}
+\cfoot{}
+\ifoot{\vspace*{-15mm}\\\hspace*{121mm}
+\mbox{\rm\fontsize{9pt}{13pt}
+\iftexfonts\else
+\fontspec{Goudy-Old-Style}
+\fi\linethickness{.3mm}
+\put(0,0){\color[rgb]{0.65098039,0,0}\line(0,-1){80}}
+\put(0,0){\color[rgb]{0.65098039,0,0}\line(0,1){9}}
+\hspace*{3mm}
+Seite \thepage}}
 %    \end{macrocode}
 % \subsection{Macros for User Interaction}
 % The following macros are defined for user interaction. See section User Interface.
