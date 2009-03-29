@@ -12,9 +12,11 @@
 %
 %<*driver>
 \documentclass[english]{ltxdoc}
-%\documentclass{gmdocc}
+%\documentclass[]{gmdocc}
+\usepackage[allowmove]{url}
 \usepackage{
 babel,
+hyperref,
 lmodern,
 xcolor,
 xltxtra
@@ -33,30 +35,38 @@ xltxtra
 % \frenchspacing
 % \maketitle
 % \begin{abstract}
-% With the |mathphysletter| class, members of the mathphys-FS of Heidelberg can write letters in the corporate design of the university. The handling tries to be very easy and intuitive.
+% With the |mathphysletter| class, members of the mathphys-FS of Heidelberg can write letters in the corporate design of the university.\footnote{\url{http://www.uni-heidelberg.de/intern/cd/manual.html}} The user interface tries to be very easy and intuitive.
 % \end{abstract}
-% \section{Important Notices:}
-% To use this class, please read section User Interface carefully. This class must be compiled with \XeLaTeX. If you don’t know about \XeLaTeX\ and how to use it, feel free to contact the author. You need to have the file |unilogo.jpg| in the folder you’re operating in! Maybe the path will change, but you need the picture to successfully compile your document. In future versions, the font Goudy Old Style might be used. Then you have to have this font available.
-% \section{User Interface}
+% \section{Important Notes}
+% To use this class, please read section \ref{UI}: User Interface carefully. This class must be compiled with \XeLaTeX. If you don’t know about \XeLaTeX\ and how to use it, feel free to contact the author. You need to have the file |unilogo.jpg| in the folder you’re operating in! Maybe the path will change, but you need the picture to successfully compile your document. The fonts |Goudy Old Style| and |Arial Regular|\footnote{Maybe these fonts have different names on your operating system. Please contact the author if you notice any problems regarding fonts.} are used. If you don’t have this font, please contact the author or say |\documentclass[texfonts]{mathphysletter|. Then the |lmodern| fonts will be used for the whole document.
+% \newpage\tableofcontents
+% \section{User Interface}\label{UI}
 % At the moment, there are 9 commands for the user. The red commands have to be used in the preamble; the black ones must \emph{not} be used in the preamble! See section \ref{example} for an example.\def\red{\color{red}}
 % \begin{itemize}
-% \item[\red|Empfänger|] This is the ”to“-field an a letter. Use |\\| to separate the lines.
-% \item[\red|Anrede|] This is used for the opening. E.\,g. say |\Anrede{Sehr geehrte Damen und Herren,}|
+% \item[\red|Empfänger|] This is the ”to“-field of the letter. Use |\\| to separate the lines.
+% \item[\red|Anrede|] This is used for the opening, like |\Anrede{Sehr geehrte Damen und Herren,}|
 % \item[\red|Ansprechperson|] The contact person in the right column under the entry ”Ansprechperson“.
 % \item[\red|Email|] The e-mail address of this person.
+% \item[|Rückadresse|] The content of the “backaddress“-field. Default is the address of the FSK.
 % \item[|Gruß|] Sets a greeting under the letter. Please use it at the place in the document where it belongs. Do not set this one or the following commands into the preamble!
 % \item[|PS|] For a post scriptum.
 % \item[|Anlagen|] Enclosings.
 % \item[|Kopie|] cc to other persons.
 % \end{itemize}
 % Please notize that these commands are case-sensitive!
-
+% 
+% That’s everything a normal user has to know about this class. The following section describes the implementation. Section \ref{example} gives an example how to use this class.
 % \section{Implementation}
 % \subsection{Preamble Settings}
 % |xkeyval| is needed to define some keys for the layout. Not yet used, but necessary in the future.\\
 % |scrlttr2| is used to produce the letters. Loading of packages and passing of options:
 %    \begin{macrocode}
 \RequirePackage{xkeyval}
+\newif \iftexfonts
+\texfontsfalse
+\DeclareOptionX{TeXfonts}{\texfontstrue}
+\DeclareOptionX{texfonts}{\texfontstrue}
+\ProcessOptionsX
 
 \LoadClass[ngerman]{scrlttr2}
 
@@ -69,7 +79,9 @@ xltxtra
   xcolor,
   xltxtra
 }
-
+%    \end{macrocode}
+% We need heavy use of |geometry| to achieve the layout:
+%    \begin{macrocode}
 \geometry{
   top=85mm,
   headheight=30mm,
@@ -83,10 +95,15 @@ xltxtra
 }
 %    \end{macrocode}
 % \subsection{The Right Column}
-% The right column is set using the following text:
+% The right column is set using the following command. If |texfonts| is not set, it is written using Goudy-Old-Style font, else lmodern will be used.
 %    \begin{macrocode}
 \newcommand\mathphysaddr{\small
-\fontspec{Goudy-Old-Style}
+\iftexfonts
+  \rmfamily
+\else
+  \fontspec{Goudy-Old-Style}
+\fi
+
 \fontsize{9pt}{13pt}\selectfont
 Fachschaft MathPhys\\
 Im Neuenheimer Feld 305\\
@@ -113,11 +130,6 @@ E-Mail\\
 
 \date{}
 %    \end{macrocode}
-% The backaddress might change. Nevertheless, this will be the default value:
-%    \begin{macrocode}
-\setkomavar{backaddress}{Universität Heidelberg Fachschaftskonferenz
-                         Albert-Überle-Straße 3-5 69120 Heidelberg}
-%    \end{macrocode}
 % Now, this is the dirty way to enable the smaller textwidth on the first page. This is not nice \TeX-code at all, feel free to mail me an improved version or any suggestions!
 % \\ \\
 % We redefine |\par| to insert a |\parshape| at the end of every paragraph. That will shorten the lines to the amount we want it. At the end of the first page, this definition is revoked and everything will go on the normal way. The pagenumber will be insertet from the second page on.
@@ -137,6 +149,10 @@ E-Mail\\
 
 \newcommand\ZweiteSeite{\endoffirstpage}
 
+\setkomavar{backaddress}{Universität Heidelberg Fachschaftskonferenz
+                         Albert-Überle-Straße 3-5 69120 Heidelberg}
+
+\newcommand\Rückadresse[1]{\setkomavar{backaddress}{#1}}
 \newcommand\Gruß[1]{\closing{#1}}
 \newcommand\PS[1]{\ps{#1}}
 \newcommand\Anlage[1]{\setkomavar*{enclseparator}{Anlage}\encl{#1}}
@@ -147,9 +163,15 @@ E-Mail\\
 % 
 % As the letter should be typeset automatically, the |\begin{letter}{}| and |\opening{}| are set automatically. The command |\thispagestyle{scrheadings}| is needed because |scrlttr2| defines another pagestyle for the first page. |\ofoot{}| suppresses the pagenumber for the first page.
 % 
-% With |\marginnote|, the right column is set. This code is a great mess, don’t copy it into another document, it will very shure break something.
+% If |texfonts| is set, |lmodern| is the default font of the document. Else Arial will be used; both are set in 10pt with 13pt skip.
 %    \begin{macrocode}
 \renewcommand\familydefault{\sfdefault}
+\fontsize{10}{13}
+\iftexfonts
+\else
+  \setsansfont{Arial}\selectfont
+\fi
+
 \AtBeginDocument{
   \begin{letter}{\Empf}
   \opening{\Anre}
@@ -166,11 +188,11 @@ E-Mail\\
 }
 %    \end{macrocode}
 % And that’s it. Happy \TeX{}ing!
-% \section{Example Document}
+% \newpage\section{Example Document}
 % \label{example}
 % This is a short document showing the usage of the |mathphysletter| class.
 % \begin{verbatim}
-% \documentclass{mathphysletter}
+% \documentclass[ngerman,texfonts]{mathphysletter} %The language must be given!
 % \usepackage{mypackage} % load whatever special package you need
 % \Empfänger{An \\ Die kleine Hexe \\ Blocksberg 7 \\ 666 Blocksberghausen}
 % \Ansprechperson{Die große Hexe}
@@ -181,9 +203,12 @@ E-Mail\\
 % die tolle Feier. Fritz will dir auch noch schreiben, aber auf der nächsten
 % Seite. \ZweiteSeite
 % Hallo Hexe!\\
-% Ich bin’s, der Fritz. Freue mich, dich wieder zu sehen!
+% Ich bin’s, der Fritz. Freue mich, dich wieder zu sehen! Die Einladung für
+% meinen Geburtstag habe ich beigelegt.
 % 
 % \Gruß{Lieben Gruß\\ Fritz}
+% \PS{ps: Auch von der großen Hexe}
+% \Anlage{Einladung zu Fritz’ Geburtstag}
 % \end{document}
 % \end{verbatim}
 % \Finale

@@ -11,8 +11,12 @@
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{mathphysletter}[]
-
 \RequirePackage{xkeyval}
+\newif \iftexfonts
+\texfontsfalse
+\DeclareOptionX{TeXfonts}{\texfontstrue}
+\DeclareOptionX{texfonts}{\texfontstrue}
+\ProcessOptionsX
 
 \LoadClass[ngerman]{scrlttr2}
 
@@ -25,7 +29,6 @@
   xcolor,
   xltxtra
 }
-
 \geometry{
   top=85mm,
   headheight=30mm,
@@ -38,7 +41,12 @@
   left=25mm,
 }
 \newcommand\mathphysaddr{\small
-\fontspec{Goudy-Old-Style}
+\iftexfonts
+  \rmfamily
+\else
+  \fontspec{Goudy-Old-Style}
+\fi
+
 \fontsize{9pt}{13pt}\selectfont
 Fachschaft MathPhys\\
 Im Neuenheimer Feld 305\\
@@ -60,8 +68,6 @@ E-Mail\\
 \setfootwidth{head}
 
 \date{}
-\setkomavar{backaddress}{Universität Heidelberg Fachschaftskonferenz
-                         Albert-Überle-Straße 3-5 69120 Heidelberg}
 \pagestyle{scrheadings}
 \ofoot{\thepage dtriunedtirne itrean }
 \newcommand\Empfänger[1]{\def\Empf{#1}}
@@ -72,12 +78,22 @@ E-Mail\\
 
 \newcommand\ZweiteSeite{\endoffirstpage}
 
+\setkomavar{backaddress}{Universität Heidelberg Fachschaftskonferenz
+                         Albert-Überle-Straße 3-5 69120 Heidelberg}
+
+\newcommand\Rückadresse[1]{\setkomavar{backaddress}{#1}}
 \newcommand\Gruß[1]{\closing{#1}}
 \newcommand\PS[1]{\ps{#1}}
 \newcommand\Anlage[1]{\setkomavar*{enclseparator}{Anlage}\encl{#1}}
 \newcommand\Anlagen[1]{\setkomavar*{enclseparator}{Anlagen}\encl{#1}}
 \newcommand\Kopie[1]{\cc{#1}}
 \renewcommand\familydefault{\sfdefault}
+\fontsize{10}{13}
+\iftexfonts
+\else
+  \setsansfont{Arial}\selectfont
+\fi
+
 \AtBeginDocument{
   \begin{letter}{\Empf}
   \opening{\Anre}
