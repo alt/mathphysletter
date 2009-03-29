@@ -11,12 +11,14 @@
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{mathphysletter}[]
+
 \RequirePackage{xkeyval}
 
 \LoadClass[ngerman]{scrlttr2}
 
 \RequirePackage{
   babel,
+  geometry,
   graphicx,
   marginnote,
   scrpage2,
@@ -24,18 +26,27 @@
   xltxtra
 }
 
-\RequirePackage[top=4cm,headheight=2.5cm]{geometry}
+\geometry{
+  top=85mm,
+  headheight=30mm,
+  headsep=50mm,
+  bottom=15mm,
+  right=68mm,
+  marginparsep=19mm,
+  marginpar=65mm,
+  bindingoffset=0mm,
+  left=25mm,
+}
 \newcommand\mathphysaddr{\small
+\fontspec{Goudy-Old-Style}
+\fontsize{9pt}{13pt}\selectfont
 Fachschaft MathPhys\\
-Im Neuenheimer Feld\\
-305\\
-69120 Heidelberg\\ \\
-Tel.:\\
-+49(0)\,62\,21/54\,24\,56\\
-Fax.:\\
-+49(0)\,62\,21/54\,24\,57\\ \\
+Im Neuenheimer Feld 305\\
+D-69120 Heidelberg\\
+Fon: +49(0)\,62\,21/54\,24\,56\\
+Fax: +49(0)\,62\,21/54\,24\,57\\
 E-Mail:\\
-fachschaft@mathphys.\\fsk.uni-heidelberg.de\vspace{5em}\\
+fachschaft@mathphys.\\fsk.uni-heidelberg.de\vspace{24mm}\\
 Datum\\
 \today
 \\ \\
@@ -44,28 +55,15 @@ Ansprechperson \\
 E-Mail\\
 \EMail
 }
-\ohead{\includegraphics[width=5.5cm]{unilogo}\hspace*{4mm}}
+\ihead{\hspace*{80mm}\includegraphics[width=65mm]{unilogo}}
 \setheadwidth[0pt]{text}
 \setfootwidth{head}
 
 \date{}
 \setkomavar{backaddress}{Universität Heidelberg Fachschaftskonferenz
                          Albert-Überle-Straße 3-5 69120 Heidelberg}
-\let\oldpar\par
-\def\par{\parshape 1 0cm 12cm \oldpar}
-
-\def\endoffirstpage{
-  \par
-  \let\par\oldpar\clearpage
-  \ofoot{
-    \color[rgb]{0.63137 0.090196 0.18431}
-    \linethickness{.4mm}
-    \line(0,-1){2}\line(0,1){10}\,
-    \normalcolor\thepage
-  }
-}
 \pagestyle{scrheadings}
-\cfoot{}
+\ofoot{\thepage dtriunedtirne itrean }
 \newcommand\Empfänger[1]{\def\Empf{#1}}
 \newcommand\Anrede[1]{\def\Anre{#1}}
 
@@ -79,18 +77,13 @@ E-Mail\\
 \newcommand\Anlage[1]{\setkomavar*{enclseparator}{Anlage}\encl{#1}}
 \newcommand\Anlagen[1]{\setkomavar*{enclseparator}{Anlagen}\encl{#1}}
 \newcommand\Kopie[1]{\cc{#1}}
+\renewcommand\familydefault{\sfdefault}
 \AtBeginDocument{
   \begin{letter}{\Empf}
   \opening{\Anre}
   \thispagestyle{scrheadings}
-  \ofoot{}
-  \marginnote{
-    \put(-80,0){
-      \begin{minipage}[b]{5cm}
-        \vspace*{-7cm}
-        \mathphysaddr
-      \end{minipage}
-    }
+  \marginnote{\hspace*{-12mm}
+  \begin{minipage}{\marginparwidth}\vspace*{-60mm}\mathphysaddr\end{minipage} %%-39.5mm-13pt
   }
 }
 \AtEndDocument{

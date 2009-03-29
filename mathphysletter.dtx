@@ -50,10 +50,7 @@ xltxtra
 % \item[|Kopie|] cc to other persons.
 % \end{itemize}
 % Please notize that these commands are case-sensitive!
-%
-% The last, but very important, user command is {\red|\ZweiteSeite|}. This command is necessary if you write a letter with more than one page. At the end of the first page, you \emph{must} use this command to end the last paragraph on that page. A new page will begin and now you can type just as you like. See section \ref{example} for the usage.
-% 
-% Why this complicated method? \TeX\ itself cannot change the textwidth in a paragraph because of its (otherwise superb) paragraph-building algorithm. So this dirty workaround is needed. Maybe in future versions the last paragraph will be implemented in a special way so this could be omitted.
+
 % \section{Implementation}
 % \subsection{Preamble Settings}
 % |xkeyval| is needed to define some keys for the layout. Not yet used, but necessary in the future.\\
@@ -65,6 +62,7 @@ xltxtra
 
 \RequirePackage{
   babel,
+  geometry,
   graphicx,
   marginnote,
   scrpage2,
@@ -72,22 +70,31 @@ xltxtra
   xltxtra
 }
 
-\RequirePackage[top=4cm,headheight=2.5cm]{geometry}
+\geometry{
+  top=85mm,
+  headheight=30mm,
+  headsep=50mm,
+  bottom=15mm,
+  right=68mm,
+  marginparsep=19mm,
+  marginpar=65mm,
+  bindingoffset=0mm,
+  left=25mm,
+}
 %    \end{macrocode}
 % \subsection{The Right Column}
 % The right column is set using the following text:
 %    \begin{macrocode}
 \newcommand\mathphysaddr{\small
+\fontspec{Goudy-Old-Style}
+\fontsize{9pt}{13pt}\selectfont
 Fachschaft MathPhys\\
-Im Neuenheimer Feld\\
-305\\
-69120 Heidelberg\\ \\
-Tel.:\\
-+49(0)\,62\,21/54\,24\,56\\
-Fax.:\\
-+49(0)\,62\,21/54\,24\,57\\ \\
+Im Neuenheimer Feld 305\\
+D-69120 Heidelberg\\
+Fon: +49(0)\,62\,21/54\,24\,56\\
+Fax: +49(0)\,62\,21/54\,24\,57\\
 E-Mail:\\
-fachschaft@mathphys.\\fsk.uni-heidelberg.de\vspace{5em}\\
+fachschaft@mathphys.\\fsk.uni-heidelberg.de\vspace{24mm}\\
 Datum\\
 \today
 \\ \\
@@ -100,7 +107,7 @@ E-Mail\\
 % \subsection{Page Layout}
 % We put the university-logo on the upper right. The date is set seperately in the right column, so we don’t need it in the class itself.
 %    \begin{macrocode}
-\ohead{\includegraphics[width=5.5cm]{unilogo}\hspace*{4mm}}
+\ihead{\hspace*{80mm}\includegraphics[width=65mm]{unilogo}}
 \setheadwidth[0pt]{text}
 \setfootwidth{head}
 
@@ -115,21 +122,9 @@ E-Mail\\
 % \\ \\
 % We redefine |\par| to insert a |\parshape| at the end of every paragraph. That will shorten the lines to the amount we want it. At the end of the first page, this definition is revoked and everything will go on the normal way. The pagenumber will be insertet from the second page on.
 %    \begin{macrocode}
-\let\oldpar\par
-\def\par{\parshape 1 0cm 12cm \oldpar}
-
-\def\endoffirstpage{
-  \par
-  \let\par\oldpar\clearpage
-  \ofoot{
-    \color[rgb]{0.63137 0.090196 0.18431}
-    \linethickness{.4mm}
-    \line(0,-1){2}\line(0,1){10}\,
-    \normalcolor\thepage
-  }
-}
 \pagestyle{scrheadings}
-\cfoot{}
+%\cfoot{}
+\ofoot{\thepage dtriunedtirne itrean }
 %    \end{macrocode}
 % \subsection{Macros for User Interaction}
 % The following macros are defined for user interaction. See section User Interface.
@@ -154,18 +149,13 @@ E-Mail\\
 % 
 % With |\marginnote|, the right column is set. This code is a great mess, don’t copy it into another document, it will very shure break something.
 %    \begin{macrocode}
+\renewcommand\familydefault{\sfdefault}
 \AtBeginDocument{
   \begin{letter}{\Empf}
   \opening{\Anre}
   \thispagestyle{scrheadings}
-  \ofoot{}
-  \marginnote{
-    \put(-80,0){
-      \begin{minipage}[b]{5cm}
-        \vspace*{-7cm}
-        \mathphysaddr
-      \end{minipage}
-    }
+  \marginnote{\hspace*{-12mm}
+  \begin{minipage}{\marginparwidth}\vspace*{-60mm}\mathphysaddr\end{minipage} %%-39.5mm-13pt
   }
 }
 %    \end{macrocode}
