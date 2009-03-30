@@ -1,10 +1,12 @@
-\documentclass[ngerman]{mathphysletter}
+\documentclass[ngerman,texfonts]{mathphysletter}
 \usepackage{blindtext,babel}
 
-\Empfänger{An den \\ \textsc{Senat} \\ Grabengasse 2 \\ 69117 Heidelberg}
+\Empfänger{An den \\ Senat \\ Grabengasse 2 \\ 69117 Heidelberg}
 \Anrede{Sehr geehrter Senat!}
 \Ansprechperson{Martina Mustermann}
 \Email{test@testserver.de}
+\Rückadresse{Fachschaft \\ Fachschaftsraum}
+\setkomafont{addressee}{\fontspec{Goudy-Old-Style}}
 \begin{document}
 \blindtext
 \blindtext[5]

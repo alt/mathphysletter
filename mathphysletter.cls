@@ -50,16 +50,16 @@
 \fontsize{9pt}{13pt}\selectfont
 Fachschaft MathPhys\\
 Im Neuenheimer Feld 305\\
-D-69120 Heidelberg\\
+D-69120 Heidelberg\\ \\
 Fon: +49(0)\,62\,21/54\,24\,56\\
-Fax: +49(0)\,62\,21/54\,24\,57\\
+Fax: +49(0)\,62\,21/54\,24\,57\\ \\
 E-Mail:\\
 fachschaft@mathphys.\\fsk.uni-heidelberg.de\vspace{24mm}\\
 Datum\\
 \today
 \\ \\
 Ansprechperson \\
-\Ansprech \\ \\
+\Ansprech\\ \\
 E-Mail\\
 \EMail
 }
@@ -72,14 +72,15 @@ E-Mail\\
 \setfootwidth{text}
 \cfoot{}
 \ifoot{\vspace*{-15mm}\\\hspace*{121mm}
-\mbox{\rm\fontsize{9pt}{13pt}
-\iftexfonts\else
-\fontspec{Goudy-Old-Style}
-\fi\linethickness{.3mm}
-\put(0,0){\color[rgb]{0.65098039,0,0}\line(0,-1){80}}
-\put(0,0){\color[rgb]{0.65098039,0,0}\line(0,1){9}}
-\hspace*{3mm}
-Seite \thepage}}
+  \mbox{\rm\fontsize{9pt}{13pt}
+  \iftexfonts\else
+  \fontspec{Goudy-Old-Style}
+  \fi\linethickness{.3mm}
+  \put(0,0){\color[rgb]{0.65098039,0,0}\line(0,-1){80}}
+  \put(0,0){\color[rgb]{0.65098039,0,0}\line(0,1){9}}
+  \hspace*{3mm}
+  Seite \thepage}
+}
 \newcommand\Empfänger[1]{\def\Empf{#1}}
 \newcommand\Anrede[1]{\def\Anre{#1}}
 
@@ -92,19 +93,21 @@ Seite \thepage}}
                          Albert-Überle-Straße 3-5 69120 Heidelberg}
 
 \newcommand\Rückadresse[1]{\setkomavar{backaddress}{#1}}
+\setkomafont{backaddress}{\fontspec{Goudy-Old-Style}}
 \newcommand\Gruß[1]{\closing{#1}}
 \newcommand\PS[1]{\ps{#1}}
 \newcommand\Anlage[1]{\setkomavar*{enclseparator}{Anlage}\encl{#1}}
 \newcommand\Anlagen[1]{\setkomavar*{enclseparator}{Anlagen}\encl{#1}}
 \newcommand\Kopie[1]{\cc{#1}}
 \renewcommand\familydefault{\sfdefault}
-\fontsize{10}{13}
 \iftexfonts
+\relax
 \else
-  \setsansfont{Arial}\selectfont
+  \setsansfont{Arial}
+  \setkomafont{address}{\fontspec{Goudy-Old-Style}\fontsize{10}{13}\selectfont}
 \fi
-
 \AtBeginDocument{
+\fontsize{10}{13}\selectfont
   \begin{letter}{\Empf}
   \opening{\Anre}
   \thispagestyle{scrheadings}
