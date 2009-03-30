@@ -30,15 +30,23 @@
   xltxtra
 }
 \geometry{
-  top=85mm,
+  top=60.5mm,
   headheight=30mm,
-  headsep=50mm,
+  %headsep=50mm,
+  headsep=0mm,
   bottom=45mm,
   right=68mm,
   marginparsep=19mm,
   marginpar=65mm,
   bindingoffset=0mm,
   left=25mm,
+}
+\def\unired{
+  \color[rgb]{
+    0.650980392157,
+    0.207843137255,
+    0.18431372549
+  }
 }
 \newcommand\mathphysaddr{\small
 \iftexfonts
@@ -55,7 +63,6 @@ Fon: +49(0)\,62\,21/54\,24\,56\\
 Fax: +49(0)\,62\,21/54\,24\,57\\ \\
 E-Mail:\\
 fachschaft@mathphys.\\fsk.uni-heidelberg.de\vspace{24mm}\\
-Datum\\
 \today
 \\ \\
 Ansprechperson \\
@@ -66,7 +73,7 @@ E-Mail\\
 \date{}
 
 \pagestyle{scrheadings}
-\ihead{\hspace*{80mm}\includegraphics[width=65mm]{unilogo}}
+\ihead{\hspace*{80mm}\includegraphics[height=30mm]{unilogo}}
 \setheadwidth[0pt]{text}
 
 \setfootwidth{text}
@@ -76,8 +83,8 @@ E-Mail\\
   \iftexfonts\else
   \fontspec{Goudy-Old-Style}
   \fi\linethickness{.3mm}
-  \put(0,0){\color[rgb]{0.65098039,0,0}\line(0,-1){80}}
-  \put(0,0){\color[rgb]{0.65098039,0,0}\line(0,1){9}}
+  \put(0,0){\unired\line(0,-1){80}}
+  \put(0,0){\unired\line(0,1){9}}
   \hspace*{3mm}
   Seite \thepage}
 }
@@ -112,7 +119,7 @@ E-Mail\\
   \opening{\Anre}
   \thispagestyle{scrheadings}
   \marginnote{\hspace*{-12mm}
-  \begin{minipage}{\marginparwidth}\vspace*{-60mm}\mathphysaddr\end{minipage} %%-39.5mm-13pt
+  \begin{minipage}{\marginparwidth}\vspace*{-55mm}\mathphysaddr\end{minipage} %%-39.5mm-13pt
   }
 }
 \AtEndDocument{
