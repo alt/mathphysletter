@@ -73,7 +73,7 @@ E-Mail\\
 \date{}
 
 \pagestyle{scrheadings}
-\ihead{\hspace*{80mm}\includegraphics[height=30mm]{unilogo}}
+\ihead{\hspace*{80mm}\includegraphics[height=45mm]{unilogo}}
 \setheadwidth[0pt]{text}
 
 \setfootwidth{text}
@@ -100,7 +100,6 @@ E-Mail\\
                          Albert-Überle-Straße 3-5 69120 Heidelberg}
 
 \newcommand\Rückadresse[1]{\setkomavar{backaddress}{#1}}
-\setkomafont{backaddress}{\fontspec{Goudy-Old-Style}}
 \newcommand\Gruß[1]{\closing{#1}}
 \newcommand\PS[1]{\ps{#1}}
 \newcommand\Anlage[1]{\setkomavar*{enclseparator}{Anlage}\encl{#1}}
@@ -111,7 +110,8 @@ E-Mail\\
 \relax
 \else
   \setsansfont{Arial}
-  \setkomafont{address}{\fontspec{Goudy-Old-Style}\fontsize{10}{13}\selectfont}
+  \setkomafont{backaddress}{\fontspec{Goudy-Old-Style}}
+  \setkomafont{addressee}{\fontspec{Goudy-Old-Style}}  %% yes, the komafont is addressee with two "e"!
 \fi
 \AtBeginDocument{
 \fontsize{10}{13}\selectfont
