@@ -158,14 +158,15 @@ E-Mail\\
 %    \end{macrocode}
 % \subsection{Macros for User Interaction}
 % The following macros are defined for user interaction. See section User Interface.
+% Attention: |\ZweiteSeite| does not work so far! Has to be fixed.
 %    \begin{macrocode}
 \newcommand\Empfänger[1]{\def\Empf{#1}}
 \newcommand\Anrede[1]{\def\Anre{#1}}
 
 \newcommand\Ansprechperson[1]{\def\Ansprech{#1}}
 \newcommand\Email[1]{\def\EMail{#1}}
-
 \newcommand\ZweiteSeite{\endoffirstpage}
+\def\endoffirstpage{\relax}
 
 \setkomavar{backaddress}{Universität Heidelberg Fachschaftskonferenz
                          Albert-Überle-Straße 3-5 69120 Heidelberg}

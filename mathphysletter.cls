@@ -93,8 +93,8 @@ E-Mail\\
 
 \newcommand\Ansprechperson[1]{\def\Ansprech{#1}}
 \newcommand\Email[1]{\def\EMail{#1}}
-
 \newcommand\ZweiteSeite{\endoffirstpage}
+\def\endoffirstpage{\relax}
 
 \setkomavar{backaddress}{Universität Heidelberg Fachschaftskonferenz
                          Albert-Überle-Straße 3-5 69120 Heidelberg}
