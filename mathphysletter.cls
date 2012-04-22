@@ -16,9 +16,12 @@
 %% File: mathphysletter.dtx by Arno Trautmann, mail: arno dot trautmann at gmx dot de
 \RequirePackage{xkeyval}
 \newif \iffreefonts
+\newif \ifbiolinum
 \freefontsfalse
+\biolinumfalse
 \DeclareOptionX{freefonts}{\freefontstrue}
-\DeclareOptionX{freefonts}{\freefontstrue}
+\DeclareOptionX{nicefonts}{\freefontstrue} %% ok, Libertine /is/ a  good font, so these are synonyms
+\DeclareOptionX{biolinum}{\biolinumtrue} %% for goudy plus Libertine instead of Arial
 \ProcessOptionsX
 
 \LoadClass[ngerman]{scrlttr2}
@@ -32,6 +35,24 @@
   xcolor,
   fontspec
 }
+
+%% setting the fonts.
+%% default is: main font = sans font = Arial (which is ugly) plus goudy for roman
+%% nice/free is: main font = sans font = Biolinum, plus Libertine for rm
+%% „biolinum“ is: main font = sans font = Biolinum, plus goudy for roman
+%%
+%% so we set up the fonts as meant, using main and sans. then we say that main is sans and call rm explicitely …
+\iffreefonts
+  \setmainfont{Linux Libertine}
+  \setsansfont{Linux Biolinum}
+\else %% then its either default or biolinum
+  \setmainfont{Goudy-Old-Style}
+  \ifbiolinum
+    \setsansfont{Linux Biolinum}
+  \else
+    \setsansfont{Arial} %% default, sadly …
+  \fi
+\fi
 \geometry{
   top=60.5mm,
   headheight=30mm,
