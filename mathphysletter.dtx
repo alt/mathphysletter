@@ -1,77 +1,97 @@
 % \iffalse
-% This is mathphysletter.dtx, a class for writing letters by the mathphys-FS HD.
-% 
-% This code is public domain.
-% 
-%% Author: Arno L. Trautmann, mail: arno dot trautmann at gmx dot de
-%%
-%
-%<+class|driver>
-%<+class>\NeedsTeXFormat{LaTeX2e}
-%<+class>\ProvidesPackage{mathphysletter}[]
-%
+%% File: mathphysletter.dtx by Arno Trautmann, mail: arno dot trautmann at gmx dot de
 %<*driver>
-\documentclass[english]{ltxdoc}
-%\documentclass[]{gmdocc}
-\usepackage[allowmove]{url}
-\usepackage{
-ifxetex,
-babel,
-hyperref,
-lmodern,
-xcolor
-}
-\ifxetex
-\usepackage{xltxtra}
-\else
-\usepackage[T1]{fontenc}
-\usepackage[latin1]{inputenc}
+\def\nameofplainTeX{plain}
+\ifx\fmtname\nameofplainTeX\else
+  \expandafter\begingroup
 \fi
+\input docstrip.tex
+\askforoverwritefalse
+\preamble
+
+EXPERIMENTAL CODE
+
+Do not distribute this file without also distributing the
+source files specified above.
+
+Do not distribute a modified version of this file under the same name.
+
+\endpreamble
+\postamble
+\endpostamble
+\keepsilent
+\generate{\file{mathphysletter.cls}{\from{mathphysletter.dtx}{class}}}
+
+\ifx\fmtname\nameofplainTeX
+  \expandafter\endbatchfile
+\else
+  \expandafter\endgroup
+\fi
+\ProvidesFile{mathphysletter.cls}
+  [22.04.2012 v0.a ––]
+
+
+\documentclass[english]{ltxdoc}
+\usepackage{
+  babel,
+  fontspec,  %% the documentation must by typeset with LuaLaTeX. period.
+  graphicx,
+  ifluatex,
+  hyperref,
+  xcolor
+}
+\hypersetup{
+  pdfborder= 0 0 0,
+  colorlinks=true,
+  linkcolor=blue,
+  filecolor=blue
+}
+
+\setmainfont{Linux Libertine}
 
 \title{The \textsf{mathphysletter} class}
 \author{Arno L. Trautmann\thanks{arno.trautmann@gmx.de}}
-\date{\today}
 
 \begin{document}
+\maketitle
+ \begin{abstract}
+ With the |mathphysletter| class, members of the mathphys-FS of Heidelberg can write letters in the corporate design of the university.\footnote{\url{http://www.uni-heidelberg.de/intern/cd/manual.html}} The user interface tries to be very easy and intuitive.
+ \end{abstract}
+ \section{Important Notes}
+ To use this class, please read section \ref{UI}: User Interface carefully. This class must be compiled with Lua\LaTeX. If you don’t know about Lua\LaTeX\ and how to use it, feel free to contact the author. You need to have the file |unilogo.jpg| in the folder you’re operating in! Maybe the path will change, but you need the picture to successfully compile your document. The fonts |Goudy Old Style| and |Arial Regular|\footnote{Maybe these fonts have different names on your operating system. Please contact the author if you notice any problems regarding fonts.} are used. If you don’t have this font, please contact the author or say |\documentclass[freefonts]{mathphysletter}|. Then the |lmodern| fonts will be used for the whole document.
+ \newpage\tableofcontents
+ \section{User Interface}\label{UI}
+ At the moment, there are 9 commands for the user. The red commands have to be used in the preamble; the black ones must \emph{not} be used in the preamble! See section \ref{example} for an example.\def\red{\color{red}}
+ \begin{itemize}
+ \item[\red|Empfänger|] This is the ”to“-field of the letter. Use |\\| to separate the lines.
+ \item[\red|Anrede|] This is used for the opening, like |\Anrede{Sehr geehrte Damen und Herren,}|
+ \item[\red|Ansprechperson|] The contact person in the right column under the entry ”Ansprechperson“.
+ \item[\red|Email|] The e-mail address of this person.
+ \item[|Rückadresse|] The content of the “backaddress“-field. Default is the address of the FSK.
+ \item[|Gruß|] Sets a greeting under the letter. Please use it at the place in the document where it belongs. Do not set this one or the following commands into the preamble!
+ \item[|PS|] For a post scriptum.
+ \item[|Anlagen|] Enclosings.
+ \item[|Kopie|] cc to other persons.
+ \end{itemize}
+ Please notize that these commands are case-sensitive!
+ 
+ That’s everything a normal user has to know about this class. The following section describes the implementation. Section \ref{example} gives an example how to use this class.
+\section{Implementation}
 \DocInput{mathphysletter.dtx}
 \end{document}
 %</driver>
-% 
+%
+%<*class>
 % \fi
-% \frenchspacing
-% \maketitle
-% \begin{abstract}
-% With the |mathphysletter| class, members of the mathphys-FS of Heidelberg can write letters in the corporate design of the university.\footnote{\url{http://www.uni-heidelberg.de/intern/cd/manual.html}} The user interface tries to be very easy and intuitive.
-% \end{abstract}
-% \section{Important Notes}
-% To use this class, please read section \ref{UI}: User Interface carefully. This class must be compiled with \XeLaTeX. If you don’t know about \XeLaTeX\ and how to use it, feel free to contact the author. You need to have the file |unilogo.jpg| in the folder you’re operating in! Maybe the path will change, but you need the picture to successfully compile your document. The fonts |Goudy Old Style| and |Arial Regular|\footnote{Maybe these fonts have different names on your operating system. Please contact the author if you notice any problems regarding fonts.} are used. If you don’t have this font, please contact the author or say |\documentclass[texfonts]{mathphysletter|. Then the |lmodern| fonts will be used for the whole document.
-% \newpage\tableofcontents
-% \section{User Interface}\label{UI}
-% At the moment, there are 9 commands for the user. The red commands have to be used in the preamble; the black ones must \emph{not} be used in the preamble! See section \ref{example} for an example.\def\red{\color{red}}
-% \begin{itemize}
-% \item[\red|Empfänger|] This is the ”to“-field of the letter. Use |\\| to separate the lines.
-% \item[\red|Anrede|] This is used for the opening, like |\Anrede{Sehr geehrte Damen und Herren,}|
-% \item[\red|Ansprechperson|] The contact person in the right column under the entry ”Ansprechperson“.
-% \item[\red|Email|] The e-mail address of this person.
-% \item[|Rückadresse|] The content of the “backaddress“-field. Default is the address of the FSK.
-% \item[|Gruß|] Sets a greeting under the letter. Please use it at the place in the document where it belongs. Do not set this one or the following commands into the preamble!
-% \item[|PS|] For a post scriptum.
-% \item[|Anlagen|] Enclosings.
-% \item[|Kopie|] cc to other persons.
-% \end{itemize}
-% Please notize that these commands are case-sensitive!
-% 
-% That’s everything a normal user has to know about this class. The following section describes the implementation. Section \ref{example} gives an example how to use this class.
-% \section{Implementation}
 % \subsection{Preamble Settings}
 % |xkeyval| is needed to define some keys for the layout. Not yet used, but necessary in the future.\\
 % |scrlttr2| is used to produce the letters. Loading of packages and passing of options:
 %    \begin{macrocode}
 \RequirePackage{xkeyval}
-\newif \iftexfonts
-\texfontsfalse
-\DeclareOptionX{TeXfonts}{\texfontstrue}
-\DeclareOptionX{texfonts}{\texfontstrue}
+\newif \iffreefonts
+\freefontsfalse
+\DeclareOptionX{freefonts}{\freefontstrue}
+\DeclareOptionX{freefonts}{\freefontstrue}
 \ProcessOptionsX
 
 \LoadClass[ngerman]{scrlttr2}
@@ -83,7 +103,7 @@ xcolor
   marginnote,
   scrpage2,
   xcolor,
-  xltxtra
+  fontspec
 }
 %    \end{macrocode}
 % We need heavy use of |geometry| to achieve the layout:
@@ -102,7 +122,7 @@ xcolor
 }
 %    \end{macrocode}
 % \subsection{The Right Column}
-% The right column is set using the following command. If |texfonts| is not set, it is written using Goudy-Old-Style font, else lmodern will be used.
+% The right column is set using the following command. If |freefonts| is not set, it is written using Goudy-Old-Style font, else lmodern will be used.
 %    \begin{macrocode}
 \def\unired{
   \color[rgb]{
@@ -111,8 +131,13 @@ xcolor
     0.18431372549
   }
 }
+
+
+%% FIXME: This should be variable.
+% first suggestion: give optional arguments to the macro
+% the default would then be the MP fachschaft
 \newcommand\mathphysaddr{\small
-\iftexfonts
+\iffreefonts
   \rmfamily
 \else
   \fontspec{Goudy-Old-Style}
@@ -147,7 +172,7 @@ E-Mail\\
 \cfoot{}
 \ifoot{\vspace*{-15mm}\\\hspace*{121mm}
   \mbox{\rm\fontsize{9pt}{13pt}
-  \iftexfonts\else
+  \iffreefonts\else
   \fontspec{Goudy-Old-Style}
   \fi\linethickness{.3mm}
   \put(0,0){\unired\line(0,-1){80}}
@@ -182,23 +207,24 @@ E-Mail\\
 % 
 % As the letter should be typeset automatically, the |\begin{letter}{}| and |\opening{}| are set automatically. The command |\thispagestyle{scrheadings}| is needed because |scrlttr2| defines another pagestyle for the first page. |\ofoot{}| suppresses the pagenumber for the first page.
 % 
-% If |texfonts| is set, |lmodern| is the default font of the document. Else Arial will be used; both are set in 10pt with 13pt skip.
+% If |freefonts| is set, |lmodern| is the default font of the document. Else Arial will be used; both are set in 10pt with 13pt skip.
 %    \begin{macrocode}
 \renewcommand\familydefault{\sfdefault}
-\iftexfonts
+\iffreefonts
 \relax
 \else
   \setsansfont{Arial}
   \setkomafont{backaddress}{\fontspec{Goudy-Old-Style}}
   \setkomafont{addressee}{\fontspec{Goudy-Old-Style}}  %% yes, the komafont is addressee with two "e"!
 \fi
+
 \AtBeginDocument{
 \fontsize{10}{13}\selectfont
   \begin{letter}{\Empf}
   \opening{\Anre}
   \thispagestyle{scrheadings}
   \marginnote{\hspace*{-12mm}
-  \begin{minipage}{\marginparwidth}\vspace*{-55mm}\mathphysaddr\end{minipage} %%-39.5mm-13pt
+  \begin{minipage}{\marginparwidth}\vspace*{-30mm}\mathphysaddr\end{minipage} %%-39.5mm-13pt  %% blind correction from -55mm to -30mm as suggested by Stefan
   }
 }
 %    \end{macrocode}
@@ -213,7 +239,7 @@ E-Mail\\
 % \label{example}
 % This is a short document showing the usage of the |mathphysletter| class.
 % \begin{verbatim}
-% \documentclass[ngerman,texfonts]{mathphysletter} %The language must be given!
+% \documentclass[ngerman,freefonts]{mathphysletter} %The language must be given!
 % \usepackage{mypackage} % load whatever special package you need
 % \Empfänger{An \\ Die kleine Hexe \\ Blocksberg 7 \\ 666 Blocksberghausen}
 % \Ansprechperson{Die große Hexe}
@@ -233,4 +259,4 @@ E-Mail\\
 % \end{document}
 % \end{verbatim}
 % \Finale
-\endinput
+% \endinput

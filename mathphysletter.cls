@@ -5,17 +5,20 @@
 %% The original source files were:
 %%
 %% mathphysletter.dtx  (with options: `class')
-%% mathphysletter: class for letters by the mathphys-FS HD
-%% Author: Arno L. Trautmann, mail: arno dot trautmann at gmx dot de
-%%
-
-\NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{mathphysletter}[]
+%% 
+%% EXPERIMENTAL CODE
+%% 
+%% Do not distribute this file without also distributing the
+%% source files specified above.
+%% 
+%% Do not distribute a modified version of this file under the same name.
+%% 
+%% File: mathphysletter.dtx by Arno Trautmann, mail: arno dot trautmann at gmx dot de
 \RequirePackage{xkeyval}
-\newif \iftexfonts
-\texfontsfalse
-\DeclareOptionX{TeXfonts}{\texfontstrue}
-\DeclareOptionX{texfonts}{\texfontstrue}
+\newif \iffreefonts
+\freefontsfalse
+\DeclareOptionX{freefonts}{\freefontstrue}
+\DeclareOptionX{freefonts}{\freefontstrue}
 \ProcessOptionsX
 
 \LoadClass[ngerman]{scrlttr2}
@@ -27,7 +30,7 @@
   marginnote,
   scrpage2,
   xcolor,
-  xltxtra
+  fontspec
 }
 \geometry{
   top=60.5mm,
@@ -48,8 +51,10 @@
     0.18431372549
   }
 }
+
+%% FIXME: This should be variable.
 \newcommand\mathphysaddr{\small
-\iftexfonts
+\iffreefonts
   \rmfamily
 \else
   \fontspec{Goudy-Old-Style}
@@ -80,7 +85,7 @@ E-Mail\\
 \cfoot{}
 \ifoot{\vspace*{-15mm}\\\hspace*{121mm}
   \mbox{\rm\fontsize{9pt}{13pt}
-  \iftexfonts\else
+  \iffreefonts\else
   \fontspec{Goudy-Old-Style}
   \fi\linethickness{.3mm}
   \put(0,0){\unired\line(0,-1){80}}
@@ -106,25 +111,26 @@ E-Mail\\
 \newcommand\Anlagen[1]{\setkomavar*{enclseparator}{Anlagen}\encl{#1}}
 \newcommand\Kopie[1]{\cc{#1}}
 \renewcommand\familydefault{\sfdefault}
-\iftexfonts
+\iffreefonts
 \relax
 \else
   \setsansfont{Arial}
   \setkomafont{backaddress}{\fontspec{Goudy-Old-Style}}
   \setkomafont{addressee}{\fontspec{Goudy-Old-Style}}  %% yes, the komafont is addressee with two "e"!
 \fi
+
 \AtBeginDocument{
 \fontsize{10}{13}\selectfont
   \begin{letter}{\Empf}
   \opening{\Anre}
   \thispagestyle{scrheadings}
   \marginnote{\hspace*{-12mm}
-  \begin{minipage}{\marginparwidth}\vspace*{-55mm}\mathphysaddr\end{minipage} %%-39.5mm-13pt
+  \begin{minipage}{\marginparwidth}\vspace*{-30mm}\mathphysaddr\end{minipage} %%-39.5mm-13pt  %% blind correction from -55mm to -30mm as suggested by Stefan
   }
 }
 \AtEndDocument{
 \end{letter}
 }
-\endinput
+%% 
 %%
 %% End of file `mathphysletter.cls'.
